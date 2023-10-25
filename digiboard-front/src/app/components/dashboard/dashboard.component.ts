@@ -36,6 +36,22 @@ export class DashboardComponent implements OnInit {
     });
   }
 
+  listBySetor(setor: string) {
+    this.colaboradorService
+      .fetchColaboradoresBySetor(setor)
+      .subscribe((data: any) => {
+        this.colaboradores = data;
+      });
+  }
+
+  listByCargo(cargo: string) {
+    this.colaboradorService
+      .fetchColaboradoresByCargo(cargo)
+      .subscribe((data: any) => {
+        this.colaboradores = data;
+      });
+  }
+
   addColaborador() {
     this.colaboradorService
       .addColaborador(this.newColaborador)
@@ -54,7 +70,7 @@ export class DashboardComponent implements OnInit {
   //adicione aqui o editar colaborador
   editColaborador(colaborador: any): void {
     const dialogRef = this.dialog.open(EditColaboradorDialogComponent, {
-      width: '250px',
+      width: '500px',
       data: colaborador,
     });
 

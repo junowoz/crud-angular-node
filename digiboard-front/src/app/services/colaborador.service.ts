@@ -14,8 +14,17 @@ export class ColaboradorService {
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 
+  // Traz todos os colaboradores
   fetchColaboradores(): Observable<any> {
     return this.http.get(`${this.baseUrl}/colaboradores`);
+  }
+
+  fetchColaboradoresBySetor(setor: string): Observable<any> {
+    return this.http.get(`${this.baseUrl}/colaboradores/setor/${setor}`);
+  }
+
+  fetchColaboradoresByCargo(cargo: string): Observable<any> {
+    return this.http.get(`${this.baseUrl}/colaboradores/cargo/${cargo}`);
   }
 
   addColaborador(data: any): Observable<any> {
