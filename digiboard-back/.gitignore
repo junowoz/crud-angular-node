@@ -1,0 +1,3 @@
+#Tirando o .env do gitignore apenas para fins demonstrativos
+#.env
+node_modules
