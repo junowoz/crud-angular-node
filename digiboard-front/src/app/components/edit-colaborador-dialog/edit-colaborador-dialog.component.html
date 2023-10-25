@@ -1,0 +1,28 @@
+<mat-dialog-content class="w-full">
+  <h2 mat-dialog-title>Editar Colaborador</h2>
+  <form [formGroup]="editForm">
+    <mat-form-field>
+      <mat-label>CPF</mat-label>
+      <input matInput formControlName="cpf" />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Nome</mat-label>
+      <input matInput formControlName="nome" />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Cargo</mat-label>
+      <input matInput formControlName="cargo" />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Setor</mat-label>
+      <input matInput formControlName="setor" />
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancelar</button>
+  <button mat-button [mat-dialog-close]="data" (click)="save()">Salvar</button>
+</mat-dialog-actions>

@@ -1,0 +1,82 @@
+<div class="flex flex-col gap-4">
+  <button
+    (click)="onLogout()"
+    class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+  >
+    Encerrar Sessão
+  </button>
+  <div class="p-6">
+    <!-- Add New Collaborator Form -->
+    <div class="mb-6">
+      <h2 class="text-xl font-bold mb-2">Adicionar Colaborador</h2>
+      <form (submit)="addColaborador()">
+        <div class="grid grid-cols-2 gap-4">
+          <input
+            type="text"
+            placeholder="CPF"
+            [(ngModel)]="newColaborador.cpf"
+            class="p-2 border rounded"
+            name="cpf"
+          />
+          <input
+            type="text"
+            placeholder="Nome"
+            [(ngModel)]="newColaborador.nome"
+            class="p-2 border rounded"
+            name="nome"
+          />
+          <input
+            type="text"
+            placeholder="Cargo"
+            [(ngModel)]="newColaborador.cargo"
+            class="p-2 border rounded"
+            name="cargo"
+          />
+          <input
+            type="text"
+            placeholder="Setor"
+            [(ngModel)]="newColaborador.setor"
+            class="p-2 border rounded"
+            name="setor"
+          />
+        </div>
+        <button
+          type="submit"
+          class="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+        >
+          Adicionar
+        </button>
+      </form>
+    </div>
+
+    <!-- List Collaborators -->
+    <div>
+      <h2 class="text-xl font-bold mb-2">Lista de Colaboradores</h2>
+      <div *ngFor="let colaborador of colaboradores">
+        <!-- Collaborator Details -->
+        <div class="border p-4 rounded mb-4">
+          <div class="grid grid-cols-2 gap-4">
+            <div>CPF: {{ colaborador.cpf }}</div>
+            <div>Nome: {{ colaborador.nome }}</div>
+            <div>Cargo: {{ colaborador.cargo }}</div>
+            <div>Setor: {{ colaborador.setor }}</div>
+          </div>
+          <div class="mt-4">
+            <button
+              (click)="editColaborador(colaborador)"
+              class="px-4 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-600 mr-2"
+            >
+              Editar
+            </button>
+            <button
+              (click)="deleteColaborador(colaborador.id)"
+              class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+            >
+              Deletar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
