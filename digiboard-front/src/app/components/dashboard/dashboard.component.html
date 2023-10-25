@@ -1,3 +1,4 @@
+<!--dashboard.component.html-->
 <div class="flex flex-col gap-4 p-2">
   <button
     (click)="onLogout()"
@@ -7,7 +8,7 @@
   </button>
   <div class="">
     <!-- Add New Collaborator Form -->
-    <div class="mb-4">
+    <div class="mb-8">
       <h2 class="text-2xl font-semibold mb-4">Adicionar Colaborador</h2>
       <form (submit)="addColaborador()">
         <div class="grid grid-cols-2 gap-6">
@@ -49,31 +50,84 @@
       </form>
     </div>
 
-    <!-- List Collaborators -->
-    <div>
-      <h2 class="text-2xl font-semibold mb-4">Lista de Colaboradores</h2>
-      <div *ngFor="let colaborador of colaboradores" class="mb-6">
-        <!-- Collaborator Details -->
-        <div class="border p-4 rounded mb-4">
-          <div class="grid grid-cols-2 gap-4">
-            <div><strong> CPF: </strong> {{ colaborador.cpf }}</div>
-            <div><strong> Nome: </strong> {{ colaborador.nome }}</div>
-            <div><strong> Cargo:</strong> {{ colaborador.cargo }}</div>
-            <div><strong> Setor:</strong> {{ colaborador.setor }}</div>
+    <!-- Filter Collaborators -->
+    <div class="flex flex-col gap-4">
+      <div>
+        <p class="text-md">
+          Selecione uma opção abaixo para filtrar a lista de colaboradores por
+          setor ou cargo:
+        </p>
+        <select
+          [(ngModel)]="listingMode"
+          (change)="updateListingMode()"
+          class="p-2 border rounded bg-white w-full"
+        >
+          <option value="all">Todos</option>
+          <option value="setor">Por Setor</option>
+          <option value="cargo">Por Cargo</option>
+        </select>
+      </div>
+
+      <!--Loader-->
+      <div
+        *ngIf="isLoading"
+        class="flex justify-center items-center py-24"
+      >
+        <div
+          class="w-16 h-16 border-t-4 border-blue-500 border-solid rounded-full animate-spin"
+        ></div>
+      </div>
+
+      <div *ngIf="!isLoading">
+        <!-- List Collaborators -->
+        <div *ngIf="listingMode === 'all'">
+          <h2 class="text-2xl font-semibold mb-4">Todos os Colaboradores</h2>
+          <div *ngFor="let colaborador of colaboradores" class="mb-6">
+            <!-- Collaborator Details -->
+            <app-colaborador
+              [colaborador]="colaborador"
+              (edit)="editColaborador($event)"
+              (delete)="deleteColaborador($event)"
+            >
+            </app-colaborador>
           </div>
-          <div class="mt-4">
-            <button
-              (click)="editColaborador(colaborador)"
-              class="px-4 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-600 mr-2"
-            >
-              Editar
-            </button>
-            <button
-              (click)="deleteColaborador(colaborador.id)"
-              class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
-            >
-              Deletar
-            </button>
+        </div>
+
+        <!-- List Collaborators by Setor -->
+        <div *ngIf="listingMode === 'setor'">
+          <h2 class="text-2xl font-semibold mb-4">Colaboradores por Setor</h2>
+          <div *ngFor="let setor of setores">
+            <h2 class="mb-2">Setor: {{ setor }}</h2>
+            <ng-container *ngFor="let colaborador of colaboradores">
+              <div *ngIf="colaborador.setor === setor">
+                <!-- Detalhes do colaborador aqui -->
+                <app-colaborador
+                  [colaborador]="colaborador"
+                  (edit)="editColaborador($event)"
+                  (delete)="deleteColaborador($event)"
+                >
+                </app-colaborador>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+
+        <!-- List Collaborators by Cargo -->
+        <div *ngIf="listingMode === 'cargo'">
+          <h2 class="mb-4">Colaboradores por Cargo</h2>
+          <div *ngFor="let cargo of cargos">
+            <h2 class="mb-2">Cargo: {{ cargo }}</h2>
+            <ng-container *ngFor="let colaborador of colaboradores">
+              <div *ngIf="colaborador.cargo === cargo">
+                <!-- Detalhes do colaborador aqui -->
+                <app-colaborador
+                  [colaborador]="colaborador"
+                  (edit)="editColaborador($event)"
+                  (delete)="deleteColaborador($event)"
+                >
+                </app-colaborador>
+              </div>
+            </ng-container>
           </div>
         </div>
       </div>

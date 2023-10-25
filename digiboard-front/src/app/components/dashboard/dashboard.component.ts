@@ -1,3 +1,4 @@
+//dashboard.component.ts
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
@@ -10,6 +11,8 @@ import { EditColaboradorDialogComponent } from '../edit-colaborador-dialog/edit-
   templateUrl: './dashboard.component.html',
 })
 export class DashboardComponent implements OnInit {
+  isLoading = false; // Nova propriedade
+
   newColaborador = {
     cpf: '',
     nome: '',
@@ -18,6 +21,11 @@ export class DashboardComponent implements OnInit {
   };
 
   colaboradores: any = [];
+
+  // Propriedades
+  listingMode: 'all' | 'setor' | 'cargo' = 'all';
+  setores: string[] = [];
+  cargos: string[] = [];
 
   constructor(
     private colaboradorService: ColaboradorService,
@@ -30,9 +38,25 @@ export class DashboardComponent implements OnInit {
     this.fetchColaboradores();
   }
 
+  updateListingMode() {
+    if (this.listingMode === 'setor') {
+      // Reúna os colaboradores por setor aqui
+      // Você pode chamar listBySetor para cada setor, mas isso pode não ser eficiente.
+      // Uma opção mais eficiente é reutilizar a lista já carregada em `colaboradores`.
+    } else if (this.listingMode === 'cargo') {
+      // Semelhante ao acima, mas para cargos
+    } else {
+      this.fetchColaboradores();
+    }
+  }
+
   fetchColaboradores() {
+    this.isLoading = true; // Iniciar o loader
     this.colaboradorService.fetchColaboradores().subscribe((data: any) => {
       this.colaboradores = data;
+      this.setores = Array.from(new Set(data.map((c: any) => c.setor)));
+      this.cargos = Array.from(new Set(data.map((c: any) => c.cargo)));
+      this.isLoading = false;
     });
   }
 
