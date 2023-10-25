@@ -1,28 +1,35 @@
 //routes.js
+// declara express, prisma e jsonwebtoken
 const express = require("express");
 const { PrismaClient } = require("@prisma/client");
 const jwt = require("jsonwebtoken");
 
+// Inicializa o prisma client
 const prisma = new PrismaClient();
 const router = express.Router();
 
+//chama o JWT_SECRET que criei
 const JWT_SECRET = process.env.JWT_SECRET;
 
-//MIDDLEWARE
+//MIDDLEWARE:
 function authenticateJWT(req, res, next) {
-  const authHeader = req.headers.authorization;
+  const authHeader = req.headers.authorization; // Get the Authorization header from the request headers
   if (authHeader) {
-    const token = authHeader.split(" ")[1];
+    // Check if the Authorization header is present
+    const token = authHeader.split(" ")[1]; // Extract the token from the header value
     jwt.verify(token, JWT_SECRET, (err) => {
+      // Verify the token using the jwt.verify method
       if (err) {
-        console.log("Token verification failed:", err);
-        return res.sendStatus(403);
+        // If the verification fails
+        console.log("Token verification failed:", err); // Log an error message to the console
+        return res.sendStatus(403); // Send a 403 Forbidden status code to the client
       }
-      next();
+      next(); // Call the next middleware function in the request-response cycle
     });
   } else {
-    console.log("No token provided");
-    res.sendStatus(401);
+    // If the Authorization header is not present
+    console.log("No token provided"); // Log a message to the console
+    res.sendStatus(401); // Send a 401 Unauthorized status code to the client
   }
 }
 
@@ -105,12 +112,13 @@ router.delete("/colaboradores/:id", authenticateJWT, async (req, res) => {
 
 //AUTH
 // Autenticação fictícia (apenas para fins de demonstração)
+// O usuário envia a senha e recebe um token
 router.post("/login", async (req, res) => {
   const { senha } = req.body;
 
-  // Aqui, você pode verificar o nome de usuário e a senha em uma base de dados real
-  // Para fins de demonstração, vamos assumir que qualquer usuário com a senha "senha" pode se autenticar
-  if (senha === "senha") {
+  // Para fins de demonstração, vamos assumir que qualquer usuário com a senha "1234" pode se autenticar
+  if (senha === "1234") {
+    // Gerar um token com duração de 30 minutos
     const token = jwt.sign({}, JWT_SECRET, { expiresIn: "30m" });
     res.json({ token });
   } else {
@@ -120,9 +128,12 @@ router.post("/login", async (req, res) => {
 
 // Renovar token
 router.get("/renew", authenticateJWT, (req, res) => {
+  // O token é enviado no header da requisição
   const token = req.headers.authorization.split(" ")[1];
   try {
+    // Verificar se o token é válido
     jwt.verify(token, JWT_SECRET);
+    // Gerar um novo token com duração de 30 minutos
     const newToken = jwt.sign({}, JWT_SECRET, {
       expiresIn: "30m",
     });
