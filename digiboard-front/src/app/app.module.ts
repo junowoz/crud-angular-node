@@ -21,6 +21,7 @@ import { MaterialModule } from './material/material.module';
 import { LoginComponent } from './components/login/login.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { EditColaboradorDialogComponent } from './components/edit-colaborador-dialog/edit-colaborador-dialog.component';
+import { ColaboradorComponent } from './components/colaborador/colaborador.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { EditColaboradorDialogComponent } from './components/edit-colaborador-di
     LoginComponent,
     DashboardComponent,
     EditColaboradorDialogComponent,
+    ColaboradorComponent,
   ],
   imports: [
     BrowserModule,
