@@ -7,7 +7,7 @@
     Encerrar Sessão
   </button>
   <div class="">
-    <!-- Add New Collaborator Form -->
+    <!-- Form para adicionar colaborador -->
     <div class="mb-8">
       <h2 class="text-2xl font-semibold mb-4">Adicionar Colaborador</h2>
       <form (submit)="addColaborador()">
@@ -50,7 +50,7 @@
       </form>
     </div>
 
-    <!-- Filter Collaborators -->
+    <!-- Filtro -->
     <div class="flex flex-col gap-4">
       <div>
         <p class="text-md">
@@ -68,7 +68,7 @@
         </select>
       </div>
 
-      <!--Loader-->
+      <!-- Loader -->
       <div
         *ngIf="isLoading"
         class="flex justify-center items-center py-24"
@@ -79,11 +79,11 @@
       </div>
 
       <div *ngIf="!isLoading">
-        <!-- List Collaborators -->
+        <!-- Listar Colaboradores -->
         <div *ngIf="listingMode === 'all'">
           <h2 class="text-2xl font-semibold mb-4">Todos os Colaboradores</h2>
           <div *ngFor="let colaborador of colaboradores" class="mb-6">
-            <!-- Collaborator Details -->
+            <!-- Detalhes -->
             <app-colaborador
               [colaborador]="colaborador"
               (edit)="editColaborador($event)"
@@ -93,14 +93,14 @@
           </div>
         </div>
 
-        <!-- List Collaborators by Setor -->
+        <!-- Listar por Setor -->
         <div *ngIf="listingMode === 'setor'">
           <h2 class="text-2xl font-semibold mb-4">Colaboradores por Setor</h2>
           <div *ngFor="let setor of setores">
             <h2 class="mb-2">Setor: {{ setor }}</h2>
             <ng-container *ngFor="let colaborador of colaboradores">
               <div *ngIf="colaborador.setor === setor">
-                <!-- Detalhes do colaborador aqui -->
+                <!-- Detalhes -->
                 <app-colaborador
                   [colaborador]="colaborador"
                   (edit)="editColaborador($event)"
@@ -112,14 +112,14 @@
           </div>
         </div>
 
-        <!-- List Collaborators by Cargo -->
+        <!-- Listar por Cargo -->
         <div *ngIf="listingMode === 'cargo'">
           <h2 class="mb-4">Colaboradores por Cargo</h2>
           <div *ngFor="let cargo of cargos">
             <h2 class="mb-2">Cargo: {{ cargo }}</h2>
             <ng-container *ngFor="let colaborador of colaboradores">
               <div *ngIf="colaborador.cargo === cargo">
-                <!-- Detalhes do colaborador aqui -->
+                <!-- Detalhes -->
                 <app-colaborador
                   [colaborador]="colaborador"
                   (edit)="editColaborador($event)"

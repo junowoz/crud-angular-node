@@ -11,8 +11,10 @@ import { EditColaboradorDialogComponent } from '../edit-colaborador-dialog/edit-
   templateUrl: './dashboard.component.html',
 })
 export class DashboardComponent implements OnInit {
-  isLoading = false; // Nova propriedade
+  // Flag para indicar se a página está em estado de carregamento.
+  isLoading = false;
 
+  // Modelo para um novo colaborador.
   newColaborador = {
     cpf: '',
     nome: '',
@@ -20,12 +22,13 @@ export class DashboardComponent implements OnInit {
     setor: '',
   };
 
+  // Lista de colaboradores, setores e cargos.
   colaboradores: any = [];
-
-  // Propriedades
-  listingMode: 'all' | 'setor' | 'cargo' = 'all';
   setores: string[] = [];
   cargos: string[] = [];
+
+  // Modo de listagem atual (todos, por setor ou por cargo).
+  listingMode: 'all' | 'setor' | 'cargo' = 'all';
 
   constructor(
     private colaboradorService: ColaboradorService,
@@ -34,24 +37,25 @@ export class DashboardComponent implements OnInit {
     public dialog: MatDialog
   ) {}
 
+  // Buscar a lista de colaboradores ao iniciar.
   ngOnInit() {
     this.fetchColaboradores();
   }
 
+  // Atualizar o modo de listagem com base na seleção do usuário.
   updateListingMode() {
     if (this.listingMode === 'setor') {
-      // Reúna os colaboradores por setor aqui
-      // Você pode chamar listBySetor para cada setor, mas isso pode não ser eficiente.
-      // Uma opção mais eficiente é reutilizar a lista já carregada em `colaboradores`.
     } else if (this.listingMode === 'cargo') {
-      // Semelhante ao acima, mas para cargos
     } else {
       this.fetchColaboradores();
     }
   }
 
+  // Método para buscar todos os colaboradores.
+  // Atualização dos arrays 'setores' e 'cargos' com valores únicos da lista de colaboradores.
+  // Definir 'isLoading' como false após o carregamento dos dados.
   fetchColaboradores() {
-    this.isLoading = true; // Iniciar o loader
+    this.isLoading = true;
     this.colaboradorService.fetchColaboradores().subscribe((data: any) => {
       this.colaboradores = data;
       this.setores = Array.from(new Set(data.map((c: any) => c.setor)));
@@ -60,6 +64,7 @@ export class DashboardComponent implements OnInit {
     });
   }
 
+  // Método para listar colaboradores por setor
   listBySetor(setor: string) {
     this.colaboradorService
       .fetchColaboradoresBySetor(setor)
@@ -68,6 +73,7 @@ export class DashboardComponent implements OnInit {
       });
   }
 
+  // Método para listar colaboradores por cargo
   listByCargo(cargo: string) {
     this.colaboradorService
       .fetchColaboradoresByCargo(cargo)
@@ -76,6 +82,8 @@ export class DashboardComponent implements OnInit {
       });
   }
 
+  // Método para adicionar um novo colaborador
+  // Resetar o modelo 'newColaborador' após a adição.
   addColaborador() {
     this.colaboradorService
       .addColaborador(this.newColaborador)
@@ -85,13 +93,15 @@ export class DashboardComponent implements OnInit {
       });
   }
 
+  // Método para deletar um colaborador
+  // Atualizar a lista após a deleção.
   deleteColaborador(id: number) {
     this.colaboradorService.deleteColaborador(id).subscribe(() => {
       this.fetchColaboradores();
     });
   }
 
-  //adicione aqui o editar colaborador
+  // Método para abrir o diálogo de edição de colaborador (abre o diálogo e atualiza a lista após o fechamento)
   editColaborador(colaborador: any): void {
     const dialogRef = this.dialog.open(EditColaboradorDialogComponent, {
       width: '500px',
@@ -109,6 +119,7 @@ export class DashboardComponent implements OnInit {
     });
   }
 
+  // Método para fazer logout e retornar à rota inicial ('/')
   onLogout() {
     this.authService.logout();
     this.router.navigate(['/']);
