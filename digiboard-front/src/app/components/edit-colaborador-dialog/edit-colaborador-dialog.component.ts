@@ -14,6 +14,7 @@ export class EditColaboradorDialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private fb: FormBuilder
   ) {
+    // Inicializando o formulário com os dados do colaborador.
     this.editForm = this.fb.group({
       cpf: [data.cpf],
       nome: [data.nome],
@@ -24,10 +25,12 @@ export class EditColaboradorDialogComponent implements OnInit {
 
   ngOnInit(): void {}
 
+  // Método para fechar o diálogo sem salvar
   onNoClick(): void {
     this.dialogRef.close();
   }
 
+  // Método para salvar as edições do colaborador
   save(): void {
     const colaborador = this.editForm.value;
     this.dialogRef.close(colaborador);

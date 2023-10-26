@@ -1,12 +1,13 @@
 <div class="w-full space-y-8">
   <div>
-    <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
+    <h1 class="mt-6 text-center text-4xl font-extrabold text-gray-900">
       Entrar na Digiboard
-    </h2>
+    </h1>
     <p class="mt-2 text-center text-sm text-gray-600">
       Olá, acesse com sua senha ultra-secreta (1234)
     </p>
   </div>
+  <!--Formulário de login-->
   <form (submit)="onLogin()" class="mt-8 space-y-6">
     <div class="rounded-md shadow-sm -space-y-px">
       <div>
@@ -21,6 +22,7 @@
         />
       </div>
     </div>
+    <!--Mensagem de erro se a senha for incorreta-->
     <div *ngIf="showErrorMessage" class="text-red-500 text-start">
       Senha errada!
     </div>
