@@ -1,5 +1,5 @@
 {
-  "name": "digiboard-back",
+  "name": "node-back",
   "version": "1.0.0",
   "description": "3. Run `prisma db pull` to turn your database schema into a Prisma schema.\r 4. Run `prisma generate` to generate the Prisma Client. You can then start querying your database.",
   "main": "index.js",

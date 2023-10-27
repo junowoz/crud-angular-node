@@ -1,9 +1,9 @@
-# Digiboard - Teste
+# Angular/Node CRUD
 
 ## Instruções para Executar o App
 
-1. Acesse a pasta `digiboard-back`, instale as dependências com `npm install` e execute o servidor localmente com `node server.js`. Isso abrirá a porta 3000.
-2. Acesse a pasta `digiboard-front`, instale as dependências com `npm install` e execute o front-end localmente com `ng serve`. Após isso, acesse a porta <http://localhost:4200/>.
+1. Acesse a pasta `node-back`, instale as dependências com `npm install` e execute o servidor localmente com `node server.js`. Isso abrirá a porta 3000.
+2. Acesse a pasta `angular-front`, instale as dependências com `npm install` e execute o front-end localmente com `ng serve`. Após isso, acesse a porta <http://localhost:4200/>.
 3. Digite a senha: "1234" para acessar o sistema.
 
 ## Checks
@@ -16,14 +16,14 @@
 
 ---
 
-## Front-End da Digiboard
+## Front-End
 
 - Angular
 - Angular Material
 - TailwindCSS
 - npm
 
-## Back-End da Digiboard
+## Back-End
 
 A base de dados PostgreSQL está armazenada online, no serviço de back-end FL0 (https://app.fl0.com/junowoz/digiboard-back/dev/digiboard).
 
@@ -33,11 +33,3 @@ A base de dados PostgreSQL está armazenada online, no serviço de back-end FL0 
 - Express
 - Dependências: cors, jsonwebtoken
 - npm
-
----
-
-## Diagrama de Entidade-Relacionamento
-
-Há apenas uma tabela, portanto, é algo simples. Diagrama realizado com [dbdiagram](https://dbdiagram.io).
-
-![Entidade](./entidade.png)
