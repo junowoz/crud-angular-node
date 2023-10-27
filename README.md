@@ -1,4 +1,4 @@
-# Angular/Node CRUD
+# Angular/Node CRUD (Dashboard de Colaboradores)
 
 ## Instruções para Executar o App
 
